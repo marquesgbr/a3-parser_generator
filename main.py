@@ -72,7 +72,7 @@ class ArithmeticVisitor:
 
 def main():
     visitor = ArithmeticVisitor()
-    print("Calculadora Aritmética. Digite '$' para sair.")
+    print("Calculadora aritmética. Digite '$' para sair.")
     while True:
         try:
             expression = input(">")
@@ -86,7 +86,7 @@ def main():
             if result is not None:
                 print("Resultado:", result)
         except Exception as e:
-            print("Erro:", e)
+            print(e)
 
 if __name__ == '__main__':
     main()
