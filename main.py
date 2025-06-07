@@ -1,6 +1,6 @@
 from antlr4 import *
-from Arithmetic.ArithmeticLexer import ArithmeticLexer
-from Arithmetic.ArithmeticParser import ArithmeticParser
+from ArithmeticLexer import ArithmeticLexer
+from ArithmeticParser import ArithmeticParser
 
 class ArithmeticVisitor:
     def __init__(self):

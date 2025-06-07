@@ -17,8 +17,8 @@ y
 x
 if (x == 30 - 0*(93489348/2342230+11*3637*345) - 10) { y = 10; x = 40} else {x = 50-5; y = 9}
 z = 15
-if (z > 10) { if (z < 20) { result = 1 } else { result = 2 } } else { result = 3; } 
-result
+if (z > 10) { if (z < 20) { _result = 1 } else { _result = 2 } } else { _result = 3; } 
+_result
 
 
 a = 5
