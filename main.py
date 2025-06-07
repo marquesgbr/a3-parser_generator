@@ -3,6 +3,9 @@ from Arithmetic.ArithmeticLexer import ArithmeticLexer
 from Arithmetic.ArithmeticParser import ArithmeticParser
 
 class ArithmeticVisitor:
+    def __init__(self):
+        self.variables = {}
+
     def visit(self, ctx):
         if isinstance(ctx, ArithmeticParser.ExprContext):
             return self.visitExpr(ctx)
@@ -10,6 +13,12 @@ class ArithmeticVisitor:
             return self.visitTerm(ctx)
         elif isinstance(ctx, ArithmeticParser.FactorContext):
             return self.visitFactor(ctx)
+        elif isinstance(ctx, ArithmeticParser.AssignmentContext):
+            return self.visitAssignment(ctx)
+        elif isinstance(ctx, ArithmeticParser.StatementContext):
+            return self.visitStatement(ctx)
+        elif isinstance(ctx, ArithmeticParser.ProgramContext):
+            return self.visitProgram(ctx)
 
     def visitExpr(self, ctx):
         result = self.visit(ctx.term(0))
@@ -32,18 +41,52 @@ class ArithmeticVisitor:
     def visitFactor(self, ctx):
         if ctx.INT():
             return int(ctx.INT().getText())
+        elif ctx.VAR():
+            var_name = ctx.VAR().getText()
+            if var_name not in self.variables:
+                raise Exception(f"Variável '{var_name}' não definida.")
+            return self.variables.get(var_name, 0)
         else:
             return self.visit(ctx.expr())
 
+    def visitAssignment(self, ctx):
+        var_name = ctx.VAR().getText()
+        value = self.visit(ctx.expr())
+        self.variables[var_name] = value
+        return value        
+    
+    def visitStatement(self, ctx):
+        if ctx.assignment():
+            return self.visit(ctx.assignment())
+        elif ctx.expr():
+            return self.visit(ctx.expr())
+        else:
+            raise Exception("Unknown statement type")
+        
+    def visitProgram(self, ctx):
+        results = []
+        for statement in ctx.statement():
+            results.append(self.visit(statement))
+        return results[-1] if results else None
+    
+
 def main():
-    expression = input("Digite uma expressão aritmética: ")
-    lexer = ArithmeticLexer(InputStream(expression))
-    stream = CommonTokenStream(lexer)
-    parser = ArithmeticParser(stream)
-    tree = parser.expr()
     visitor = ArithmeticVisitor()
-    result = visitor.visit(tree)
-    print("Resultado:", result)
+    print("Calculadora Aritmética. Digite '$' para sair.")
+    while True:
+        try:
+            expression = input(">")
+            if expression == "$":
+                break
+            lexer = ArithmeticLexer(InputStream(expression))
+            stream = CommonTokenStream(lexer)
+            parser = ArithmeticParser(stream)
+            tree = parser.program()
+            result = visitor.visit(tree)
+            if result is not None:
+                print("Resultado:", result)
+        except Exception as e:
+            print("Erro:", e)
 
 if __name__ == '__main__':
     main()
