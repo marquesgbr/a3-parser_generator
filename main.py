@@ -19,6 +19,14 @@ class ArithmeticVisitor:
             return self.visitStatement(ctx)
         elif isinstance(ctx, ArithmeticParser.ProgramContext):
             return self.visitProgram(ctx)
+        elif isinstance(ctx, ArithmeticParser.IfStatementContext):
+            return self.visitIfStatement(ctx)
+        elif isinstance(ctx, ArithmeticParser.ComparisonContext):
+            return self.visitComparison(ctx)
+        elif isinstance(ctx, ArithmeticParser.BlockContext):
+            return self.visitBlock(ctx)
+        else:
+            raise Exception(f"Tipo de contexto desconhecido: {type(ctx)}")
 
     def visitExpr(self, ctx):
         result = self.visit(ctx.term(0))
@@ -58,16 +66,55 @@ class ArithmeticVisitor:
     def visitStatement(self, ctx):
         if ctx.assignment():
             return self.visit(ctx.assignment())
+        elif ctx.ifStatement():
+            return self.visit(ctx.ifStatement())
         elif ctx.expr():
             return self.visit(ctx.expr())
         else:
             raise Exception("Unknown statement type")
-        
+    
+    def visitBlock(self, ctx):
+        results = []
+        for statement in ctx.statement():
+            results.append(self.visit(statement))
+        return results[-1] if results else None
+
     def visitProgram(self, ctx):
         results = []
         for statement in ctx.statement():
             results.append(self.visit(statement))
         return results[-1] if results else None
+
+    def visitComparison(self, ctx):
+        left = self.visit(ctx.expr(0))
+        right = self.visit(ctx.expr(1))
+        
+        op = ctx.getChild(1).getText()
+        if op == '==':
+            return left == right
+        elif op == '!=':
+            return left != right
+        elif op == '<':
+            return left < right
+        elif op == '>':
+            return left > right
+        elif op == '<=':
+            return left <= right
+        elif op == '>=':
+            return left >= right
+
+    def visitIfStatement(self, ctx):
+        condition = self.visit(ctx.comparison())
+        if condition:
+            if ctx.block(0):
+                return self.visit(ctx.block(0))
+            return self.visit(ctx.statement(0))
+        elif ctx.ELSE():
+            if ctx.block(1):
+                return self.visit(ctx.block(1))
+            return self.visit(ctx.statement(1))
+        return None
+    
     
 
 def main():

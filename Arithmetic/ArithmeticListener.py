@@ -1,4 +1,4 @@
-# Generated from Arithmetic.g4 by ANTLR 4.13.1
+# Generated from Arithmetic/Arithmetic.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .ArithmeticParser import ArithmeticParser
@@ -35,6 +35,15 @@ class ArithmeticListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ArithmeticParser#comparison.
+    def enterComparison(self, ctx:ArithmeticParser.ComparisonContext):
+        pass
+
+    # Exit a parse tree produced by ArithmeticParser#comparison.
+    def exitComparison(self, ctx:ArithmeticParser.ComparisonContext):
+        pass
+
+
     # Enter a parse tree produced by ArithmeticParser#program.
     def enterProgram(self, ctx:ArithmeticParser.ProgramContext):
         pass
@@ -59,6 +68,24 @@ class ArithmeticListener(ParseTreeListener):
 
     # Exit a parse tree produced by ArithmeticParser#assignment.
     def exitAssignment(self, ctx:ArithmeticParser.AssignmentContext):
+        pass
+
+
+    # Enter a parse tree produced by ArithmeticParser#block.
+    def enterBlock(self, ctx:ArithmeticParser.BlockContext):
+        pass
+
+    # Exit a parse tree produced by ArithmeticParser#block.
+    def exitBlock(self, ctx:ArithmeticParser.BlockContext):
+        pass
+
+
+    # Enter a parse tree produced by ArithmeticParser#ifStatement.
+    def enterIfStatement(self, ctx:ArithmeticParser.IfStatementContext):
+        pass
+
+    # Exit a parse tree produced by ArithmeticParser#ifStatement.
+    def exitIfStatement(self, ctx:ArithmeticParser.IfStatementContext):
         pass
 
 
