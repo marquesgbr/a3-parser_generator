@@ -1,0 +1,32 @@
+
+v1 = 2 * (3 + 4) / 2
+v2 = 10 - 5 * 2 + 8 / 2
+v3 = v1 + v2 * 2
+v1
+v2
+v3
+
+
+x = 5
+if (x > 3) x = 10
+x+1
+if (x < 5) x = 1 else x = 20
+x-1
+if (x == 40/2) y = 0 else { y=1; x = 20*2;}
+y
+x
+if (x == 30 - 0*(93489348/2342230+11*3637*345) - 10) { y = 10; x = 40} else {x = 50-5; y = 9}
+z = 15
+if (z > 10) { if (z < 20) { result = 1 } else { result = 2 } } else { result = 3; } 
+result
+
+
+a = 5
+b = 10
+if (a != b) c = 1 else c = 0
+c
+if (a <= b) d = 1 else d = 0
+d
+if (a >= b) e = 1 else e = 0
+e
+
